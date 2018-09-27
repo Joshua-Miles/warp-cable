@@ -53,7 +53,7 @@ module WarpCable
       def hyper_resources(*resources)
         resources(*resources)
         resources.each do | resource |
-          name = name.slice(0,1).capitalize + resource.slice(1..-1)
+          name = resource.slice(0,1).capitalize + resource.slice(1..-1)
           
           controller_name = "#{name}Controller"
           channel_name = "#{name}Channel"
