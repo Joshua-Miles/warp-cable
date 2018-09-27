@@ -53,19 +53,18 @@ module Hyper
       def hyper_resources(*resources)
         resources(*resources)
         resources.each do | resource |
-          name = "#{resource}Controller"
-          name = name.slice(0,1).capitalize + name.slice(1..-1)
+          name = name.slice(0,1).capitalize + resource.slice(1..-1)
+          
+          controller_name = "#{name}Controller"
+          channel_name = "#{name}Channel"
           
           http = Class.new(HttpController)
           socket = Class.new(SocketController)
           
-          hyper = Object.const_get("Hyper#{name}").new
+          hyper = Object.const_get("#{name}WarpController").new
 
           http.bind(hyper)
           socket.bind(hyper)
-
-          controller_name = name
-          channel_name = "#{name}Channel"
           
           Object.const_set(channel_name, socket)
           Object.const_set(controller_name, http)

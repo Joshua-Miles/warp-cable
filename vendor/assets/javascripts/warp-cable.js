@@ -51,7 +51,7 @@
             this.ready = new Promise( resolve => {
                 this.cable = cable.subscriptions.create(
                     {
-                        channel: `${controller}ControllerChannel`,
+                        channel: `${controller}Channel`,
                     }, 
                     {
                         received: response => {
