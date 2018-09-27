@@ -34,7 +34,7 @@ class SocketController < ActionCable::Channel::Base
 
 end
 
-module Hyper
+module WarpCable
 
     class Controller 
 
@@ -79,4 +79,4 @@ module Hyper
 
 end
 
-ActionDispatch::Routing::Mapper.send :include, Hyper::Router
+ActionDispatch::Routing::Mapper.send :include, WarpCable::Router
