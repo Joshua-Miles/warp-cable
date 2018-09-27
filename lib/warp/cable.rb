@@ -2,11 +2,11 @@ require "warp/cable/railtie"
 
 class HttpController < ActionController::Base
       
-  def self.bind(hyper)
-    hyper.public_methods(false).each do | method |
+  def self.bind(warp)
+    warp.public_methods(false).each do | method |
 
       define_method(method) do 
-        hyper.send(method, params) do | result |
+        warp.send(method, params) do | result |
           render json: result
         end
       end
@@ -18,13 +18,13 @@ end
 
 class SocketController < ActionCable::Channel::Base
 
-  def self.bind(hyper)
-    hyper.public_methods(false).each do | method |
+  def self.bind(warp)
+    warp.public_methods(false).each do | method |
 
       define_method(method) do | data |
         params =  ActionController::Parameters.new(data['params'])
-        hyper.params = params
-        hyper.send method, params do | result |
+        warp.params = params
+        warp.send method, params do | result |
           transmit({ method: method, payload: result })
         end
       end
@@ -50,7 +50,7 @@ module WarpCable
 
     module Router
 
-      def hyper_resources(*resources)
+      def warp_resources(*resources)
         resources(*resources)
         resources.each do | resource |
           name = resource.slice(0,1).capitalize + resource.slice(1..-1)
@@ -61,10 +61,10 @@ module WarpCable
           http = Class.new(HttpController)
           socket = Class.new(SocketController)
           
-          hyper = Object.const_get("#{name}WarpController").new
+          warp = Object.const_get("#{name}WarpController").new
 
-          http.bind(hyper)
-          socket.bind(hyper)
+          http.bind(warp)
+          socket.bind(warp)
           
           Object.const_set(channel_name, socket)
           Object.const_set(controller_name, http)
