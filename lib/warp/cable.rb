@@ -6,7 +6,9 @@ class HttpController < ActionController::Base
     hyper.public_methods(false).each do | method |
 
       define_method(method) do 
-        render json: hyper.send(method, params)
+        hyper.send(method, params) do | result |
+          render json: result
+        end
       end
 
     end
