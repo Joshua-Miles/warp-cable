@@ -27,7 +27,7 @@ class SocketController < ActionCable::Channel::Base
         begin
           warp.run_callbacks(:process_action)
         rescue Exception
-          transmit({ method: Exception, payload: result })
+          transmit({ method: method, payload: Exception })
         end
         warp.send method, params do | result |
           transmit({ method: method, payload: result })
