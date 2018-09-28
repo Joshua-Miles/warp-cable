@@ -29,8 +29,8 @@ class SocketController < ActionCable::Channel::Base
           warp.send method, params do | result |
             transmit({ method: method, payload: result })
           end
-        rescue Exception
-          transmit({ method: method, payload: Exception })
+        rescue => exception
+          transmit({ method: method, payload: exception.message })
         end
       end
 
