@@ -6,9 +6,15 @@ class HttpController < ActionController::Base
     warp.public_methods(false).each do | method |
 
       define_method(method) do 
-        warp.send(method, params) do | result |
-          render json: result
+        begin
+          warp.run_callbacks(:process_action)
+          warp.send(method, params) do | result |
+            render json: result
+          end
+        rescue => exception
+          render json: exception.message 
         end
+        
       end
 
     end
@@ -25,8 +31,8 @@ class SocketController < ActionCable::Channel::Base
         params =  ActionController::Parameters.new(data['params'])
         warp.params = params
         begin
-          warp.run_callbacks(:process_action)
-          warp.send method, params do | result |
+          # warp.run_callbacks(:process_action)
+          warp.process method, params do | result |
             transmit({ method: method, payload: result })
           end
         rescue => exception
