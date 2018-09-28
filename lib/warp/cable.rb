@@ -7,7 +7,7 @@ class HttpController < ActionController::Base
 
       define_method(method) do 
         begin
-          warp.action_name = method.to_sym
+          warp.action_name = method.to_s
           warp.run_callbacks(:process_action)
           warp.send(method, params) do | result |
             render json: result
