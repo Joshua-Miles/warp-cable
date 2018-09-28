@@ -41,7 +41,7 @@ end
 
 module WarpCable
 
-    class Controller 
+    class Controller < AbstractController::Base
 
       include AbstractController::Callbacks
       extend AbstractController::Callbacks::ClassMethods
