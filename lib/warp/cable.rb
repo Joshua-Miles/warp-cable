@@ -42,6 +42,10 @@ module WarpCable
       include AbstractController::Callbacks
       extend AbstractController::Callbacks::ClassMethods
 
+      def performed?
+        true
+      end
+
       def params=(params)
         @params = params
       end
