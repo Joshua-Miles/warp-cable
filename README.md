@@ -115,7 +115,7 @@ api.subscribe('Users', 'index', {}, users => {
     console.log('Recieved:',users)
 })
 
-// Console => '[]'
+// Console => Recieved: '[]'
 
 ```
 
@@ -127,7 +127,7 @@ Trigger accepts the same arguments, but no callback (future versions may return 
 
  api.trigger('Users', 'create', { first_name: 'James' })
 
- // Console => '[ { id: 1, first_name: 'James' } ]'
+ // Console => Recieved: '[ { id: 1, first_name: 'James' } ]'
 
 ```
 
