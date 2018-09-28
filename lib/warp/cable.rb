@@ -32,7 +32,7 @@ class SocketController < ActionCable::Channel::Base
         params =  ActionController::Parameters.new(data['params'])
         warp.params = params
         begin
-          warp.action_name = method.to_sym
+          warp.action_name = method.to_s
           warp.run_callbacks(:process_action)
           warp.send method, params do | result |
             transmit({ method: method, payload: result })
