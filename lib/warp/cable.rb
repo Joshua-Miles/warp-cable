@@ -23,14 +23,15 @@ class SocketController < ActionCable::Channel::Base
 
       define_method(method) do | data |
         params =  ActionController::Parameters.new(data['params'])
-        warp.params = params 
-        warp.run_callbacks(:process_action) do | result |
-          puts "HERE", result
-          warp.send method, params do | result |
-            transmit({ method: method, payload: result })
-          end
+        warp.params = params
+        begin
+          warp.run_callbacks(:process_action)
+        rescue err
+          transmit({ method: err, payload: result })
         end
-        
+        warp.send method, params do | result |
+          transmit({ method: method, payload: result })
+        end
       end
 
     end
