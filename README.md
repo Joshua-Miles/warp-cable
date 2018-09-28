@@ -4,14 +4,14 @@ Warp Cable is tool for rapid development of socket-based rails applications.
 
 ## Installation
 
-There are two sides to using Warp Cable.
-* Server and
-* Client
+There are two sides to using Warp Cable:
+* Server-side
+* Client-side
 
 ### Server Installation 
 
 Add this to your gem file:
-`gem warp-cable`
+`gem "warp-cable", git: "https://github.com/Joshua-Miles/warp-cable.git"`
 
 Then run 
 `bundle install`
@@ -102,7 +102,7 @@ end
 
 ```
 
-`warp_resources` is a method in Rails routing engine which is added by WarpCable and creates wss and http access to a single controller.
+`warp_resources` is a method in Rails' routing engine which is added by WarpCable and creates wss and http access to a single controller.
 
 On our client, we have access to the methods `subscribe` and `trigger`. Subscribe accepts a controller name, a method name (any method you have defined in the WarpController), an object of params, and a callback function:
 
@@ -118,7 +118,7 @@ api.subscribe('Users', 'index', {}, users => {
 
 ```
 
-The callback will be called once the data is retrieved, every time the data is `yield`ed from the controller method it subscribed to.
+The callback to subscribe will be called every time data is `yield`ed from the controller method it subscribed to.
 
 Trigger accepts the same arguments, but no callback (future versions may return a promise or accept a callback for error handling):
 
@@ -130,7 +130,7 @@ Trigger accepts the same arguments, but no callback (future versions may return 
 
 ```
 
-Functionally trigger method is similar to subscribe, but semantically denotes an action being made on state (persisted information) as opposed to a request for existing state.
+Functionally the trigger method is similar to subscribe, but semantically denotes an action being made on state (persisted information) as opposed to a request for existing state.
 
 
 
