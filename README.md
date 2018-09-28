@@ -104,7 +104,7 @@ end
 
 `warp_resources` is a method in Rails routing engine which is added by WarpCable and creates wss and http access to a single controller.
 
-On our client, we have access to the methods `subscribe` and `trigger`. Subscribe accepts a controller name, a method name, an object of params, and a callback function:
+On our client, we have access to the methods `subscribe` and `trigger`. Subscribe accepts a controller name, a method name (any method you have defined in the WarpController), an object of params, and a callback function:
 
 ```
 const API_DOMAIN = 'http://locahost:3000/cable'
@@ -130,7 +130,7 @@ Trigger accepts the same arguments, but no callback (future versions may return 
 
 ```
 
-Functionally the method is similar, but semantically denotes an action being made on state (persisted information) as opposed to a request for existing state.
+Functionally trigger method is similar to subscribe, but semantically denotes an action being made on state (persisted information) as opposed to a request for existing state.
 
 
 
