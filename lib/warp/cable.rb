@@ -41,10 +41,10 @@ end
 
 module WarpCable
 
-    class Controller < AbstractController::Base
+    class Controller < ActionController::Base
 
-      include AbstractController::Callbacks
-      extend AbstractController::Callbacks::ClassMethods
+      # include AbstractController::Callbacks
+      # extend AbstractController::Callbacks::ClassMethods
 
       def performed?
         true
