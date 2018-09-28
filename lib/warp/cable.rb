@@ -7,7 +7,7 @@ class HttpController < ActionController::Base
 
       define_method(method) do 
         begin
-          warp.action_name = method
+          warp.action_name = method.to_sym
           warp.run_callbacks(:process_action)
           warp.send(method, params) do | result |
             render json: result
@@ -32,7 +32,7 @@ class SocketController < ActionCable::Channel::Base
         params =  ActionController::Parameters.new(data['params'])
         warp.params = params
         begin
-          warp.action_name = method
+          warp.action_name = method.to_sym
           warp.run_callbacks(:process_action)
           warp.send method, params do | result |
             transmit({ method: method, payload: result })
