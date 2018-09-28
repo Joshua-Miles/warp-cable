@@ -38,11 +38,21 @@ module WarpCable
 
     class Controller 
 
+      extend AbstractController::Callbacks
+
       def params=(params)
         @params = params
       end
 
       def params 
+        @params
+      end
+
+      def headers=(params)
+        @params = params
+      end
+
+      def headers 
         @params
       end
 
