@@ -55,7 +55,7 @@
                     }, 
                     {
                         received: response => {
-                            this.emit(response.method, response.payload)
+                            this.emit(response.$subscription_id, response.payload)
                         },
                         connected: function() {
                             resolve()
@@ -73,16 +73,17 @@
     }
 
     let id = 0;
-    this.subscribe = function(controller, method, params = new Object, callback){
+    this.subscribe = function(controller, method, params = new Object, callback = () => void(0)){
       let channel = channels[controller] || new Channel(controller)
       params.$subscription_id = id++
       channel.ready.then( () => channel.perform(method, params) )
-      channel.on(method, callback)
+      channel.on(params.$subscription_id, callback)
     }
 
-    this.trigger = function(controller, method, params){
+    this.trigger = function(controller, method, params = new Object, callback = () => void(0)){
         let channel = channels[controller] || new Channel(controller)
         channel.ready.then( () => channel.perform(method, params) )
+        channel.on(params.$subscription_id, callback)
     }
   
   }).call(this);
