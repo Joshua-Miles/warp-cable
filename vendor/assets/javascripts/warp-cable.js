@@ -72,8 +72,10 @@
 
     }
 
-    this.subscribe = function(controller, method, params, callback){
+    let id = 0;
+    this.subscribe = function(controller, method, params = new Object, callback){
       let channel = channels[controller] || new Channel(controller)
+      params.$subscription_id = id++
       channel.ready.then( () => channel.perform(method, params) )
       channel.on(method, callback)
     }

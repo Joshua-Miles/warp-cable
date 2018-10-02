@@ -35,10 +35,10 @@ class SocketController < ActionCable::Channel::Base
           warp.action_name = method.to_s
           warp.run_callbacks(:process_action)
           warp.send method, params do | result |
-            transmit({ method: method, payload: result })
+            transmit({ id: params[:$subscription_id], payload: result })
           end
         rescue => exception
-          transmit({ method: method, payload: exception.message })
+          transmit({ id: params[:$subscription_id], payload: exception.message })
         end
       end
 
