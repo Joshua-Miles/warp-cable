@@ -47,7 +47,7 @@ end
 This class will function very similarly to a normal Rails controller for an API, with the exception that we will `yield <output>`, rather than `render json: <output>`: 
 
 ```
-class UsersWarpController extends WarpCable::Controller
+class UsersWarpController < WarpCable::Controller
 
     def index(params)
         User.after_create do
@@ -107,8 +107,8 @@ end
 On our client, we have access to the methods `subscribe` and `trigger`. Subscribe accepts a controller name, a method name (any method you have defined in the WarpController), an object of params, and a callback function:
 
 ```
-const API_DOMAIN = 'http://locahost:3000/cable'
 import WarpCable from 'warp-cable-client'
+const API_DOMAIN = 'ws://locahost:3000/cable'
 let api = WarpCable(API_DOMAIN)
 
 api.subscribe('Users', 'index', {}, users => {
