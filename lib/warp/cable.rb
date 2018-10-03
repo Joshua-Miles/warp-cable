@@ -82,7 +82,7 @@ module WarpCable
       def warp_resources(*resources)
         resources(*resources)
         resources.each do | resource |
-          name = resource.slice(0,1).capitalize + resource.slice(1..-1)
+          name = resource.to_s.camelize
           
           controller_name = "#{name}Controller"
           channel_name = "#{name}Channel"
