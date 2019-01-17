@@ -7,13 +7,18 @@ class HttpController < ActionController::Base
 
       define_method(method) do 
         begin
+          warp.params = params
           warp.action_name = method.to_s
           warp.run_callbacks(:process_action)
+          rendered = false
           warp.send(method, params) do | result |
-            render json: result
+            if !rendered 
+              rendered = true
+              render result
+            end
           end
         rescue => exception
-          render json: exception.message 
+          render json: {  error: true, message: exception.message }
         end
         
       end
@@ -35,7 +40,7 @@ class SocketController < ActionCable::Channel::Base
           warp.action_name = method.to_s
           warp.run_callbacks(:process_action)
           warp.send method, params do | result |
-            transmit({ :$subscription_id => params[:$subscription_id], payload: result })
+            transmit({ :$subscription_id => params[:$subscription_id], payload: ActionController::Base.render(result) })
           end
         rescue => exception
           transmit({ :$subscription_id => params[:$subscription_id], payload: exception.message })
