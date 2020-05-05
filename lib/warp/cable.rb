@@ -1,6 +1,6 @@
 require "warp/cable/railtie"
 
-class HttpController < ActionController::Base
+class HttpController < ActionController::API
       
   def self.bind(warp)
     warp.public_methods(false).each do | method |
